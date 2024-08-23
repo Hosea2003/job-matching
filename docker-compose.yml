@@ -1,0 +1,29 @@
+services:
+  db:
+    image: postgres:16
+    volumes:
+      - data:/var/lib/postgresql/data
+    restart: always
+    container_name: job-matching-db
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+  backend:
+    build: .
+    container_name: job-matching
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.prod
+    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+
+volumes:
+  data:
