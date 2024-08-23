@@ -23,7 +23,7 @@ services:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.prod
-    command: gunicorn core.wsgi --bind 0.0.0.0:8000
+    command: python manage.py runserver --settings=core.settings.prod
 
 volumes:
   data:
