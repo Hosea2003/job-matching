@@ -23,7 +23,7 @@ services:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.prod
-    command: python manage.py runserver --settings=core.settings.prod
+    command: python manage.py runserver
 
 volumes:
   data:
