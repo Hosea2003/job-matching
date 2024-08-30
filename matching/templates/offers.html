@@ -1,0 +1,29 @@
+{%load static%}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job matching</title>
+    <link rel="stylesheet" href="{%static 'style.css'%}">
+</head>
+<body>
+    <form action="">
+        <div class="wrapper">
+            <input type="email" name="email" placeholder="Entrer l'email de l'utilisateur">
+            <button type="submit">Rechercher</button>
+        </div>
+    </form>
+
+    <div class="jobs">
+        {%for job in jobs%}
+        <div class="job">
+            <h3>{{job.name}}</h3>
+            <span class="small">Experience souhaité: {{job.experience}} année(s)</span>
+            <span>Votre profil correspond à: {{job.total_match |floatformat:2}}%</span>
+        </div>
+        {%endfor%}
+    </div>
+</body>
+</html>
