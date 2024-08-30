@@ -5,30 +5,23 @@ from django.db.models import (
     Case,
     When,
     FloatField,
-    Value,
     F,
     IntegerField,
     Count,
     OuterRef,
     Subquery,
-    Exists,
 )
-import math
-
-"""
-To make the formula simple and clean:
-- having all the skills needed and having a level higher or equal than the required level is a 100% matching
-- if the user has the skill but the level is less than required: 
-"""
 
 
 def select_matching_offers(user: User):
+    # get level for a specific hardskill of an user
     def user_hardskill_level():
         return UserHardSkill.objects.filter(
             user=user,
             hardskill=OuterRef("job_hardskills__hardskill"),
         ).values("level")
 
+    # get level for a specific softskill of an user
     def user_softskill_level():
         return UserSoftSkill.objects.filter(
             user=user,
@@ -87,6 +80,8 @@ def select_matching_offers(user: User):
                         ),
                         then=Case(
                             When(
+                                # if the level hardskill required is higher than the user
+                                # we calculate the ratio between the level of the user and the required level
                                 job_hardskills__level__gt=Subquery(
                                     user_hardskill_level()
                                 ),
@@ -138,6 +133,7 @@ def select_matching_offers(user: User):
                 default=1,
                 output_field=FloatField(),
             ),
+            # calculate final result by considering the percentage
             total_match=(
                 F("hard_skill_match") * 0.5
                 + F("soft_skill_match") * 0.2
