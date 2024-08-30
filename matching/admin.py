@@ -13,12 +13,14 @@ from matching.models import (
 
 # Register your models here.
 admin.site.register(
-    User,
-    JobOffer,
-    HardSkill,
-    SoftSkill,
-    UserHardSkill,
-    UserSoftSkill,
-    JobHardSkill,
-    JobSoftSkill,
+    (
+        User,
+        JobOffer,
+        HardSkill,
+        SoftSkill,
+        UserHardSkill,
+        UserSoftSkill,
+        JobHardSkill,
+        JobSoftSkill,
+    )
 )
