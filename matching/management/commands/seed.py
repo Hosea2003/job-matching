@@ -19,11 +19,11 @@ from matching.models import (
 
 class Command(BaseCommand):
     def handle(self, *args: Any, **options: Any) -> str | None:
-        # self.load_user()
-        # self.load_job_offer()
-        # self.load_hard_skills()
-        # self.load_soft_skills()
-        # self.load_job_skills()
+        self.load_user()
+        self.load_job_offer()
+        self.load_hard_skills()
+        self.load_soft_skills()
+        self.load_job_skills()
         self.load_user_skills()
         pass
 
